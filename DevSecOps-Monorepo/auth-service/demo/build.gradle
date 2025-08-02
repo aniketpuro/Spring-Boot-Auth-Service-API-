@@ -1,30 +1,52 @@
-plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.5.4'
-	id 'io.spring.dependency-management' version '1.1.7'
-}
+// This is the build file for the Auth Service, configured for Gradle.
+    // It manages dependencies, plugins, and project settings.
 
-group = 'com.example'
-version = '0.0.1-SNAPSHOT'
+    // The plugins block applies various plugins to the project.
+    // We are using plugins for Java, Spring Boot, and the Spring Dependency Management tool.
+    plugins {
+    	id 'java'
+    	id 'org.springframework.boot' version '3.2.0'
+    	id 'io.spring.dependency-management' version '1.1.4'
+    }
 
-java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
-	}
-}
+    // The 'group' and 'version' are identifiers for our project.
+    group = 'com.example'
+    version = '0.0.1-SNAPSHOT'
 
-repositories {
-	mavenCentral()
-}
+    // This sets the Java version for our project.
+    java {
+    	sourceCompatibility = '17'
+    }
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-}
+    // The repositories block tells Gradle where to find our dependencies.
+    // We are using Maven Central, the most common repository for Java libraries.
+    repositories {
+    	mavenCentral()
+    }
 
+    // The dependencies block is where we declare all the libraries our project needs.
+    // This is the most important part of this file.
+    dependencies {
+    	// This is the core dependency for building Spring Boot web applications.
+    	implementation 'org.springframework.boot:spring-boot-starter-web'
+        
+        // **NEW DEPENDENCY:** This is the core library for Spring Data JPA.
+        // It provides all the functionality for Object-Relational Mapping (ORM)
+        // and the JpaRepository interface.
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
+        // **NEW DEPENDENCY:** This is the H2 database dependency.
+        // We're using it as an in-memory database for local development and testing.
+        // 'runtimeOnly' means it's only needed at runtime, not for compilation.
+    	runtimeOnly 'com.h2database:h2'
+        
+        // This is the test dependency for Spring Boot. It includes JUnit.
+    	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
 
-tasks.named('test') {
-	useJUnitPlatform()
-}
+    // The tasks.named block configures specific build tasks.
+    // We ensure that test tasks use JUnit Platform.
+    tasks.named('test') {
+    	useJUnitPlatform()
+    }
+    

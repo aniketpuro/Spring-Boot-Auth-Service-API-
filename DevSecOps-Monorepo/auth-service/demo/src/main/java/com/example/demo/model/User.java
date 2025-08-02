@@ -1,11 +1,17 @@
+// This is the model class for a User.
+// It maps to a table in the database.
+
 package com.example.demo.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table; // Import the Table annotation
 
 @Entity
+@Table(name = "users") // We are explicitly setting the table name to 'users' to avoid
+                     // conflict with the reserved SQL keyword 'user'.
 public class User {
 
     @Id
@@ -13,11 +19,9 @@ public class User {
     private Long id;
     private String username;
     private String email;
+    private String password;
 
-    // Default constructor (required by JPA)
-    public User() {}
-
-    // Getters and setters
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -40,5 +44,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
